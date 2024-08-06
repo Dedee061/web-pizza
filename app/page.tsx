@@ -36,6 +36,8 @@ export default function Home() {
             >Acessar</Button>
             
         </form>
+
+        <a className={styles.text}>Não Possui uma conta ? Castadre-se</a>
         </div>
     </div>
     </>
