@@ -1,4 +1,3 @@
-"use client"
 
 import Head from "next/head";
 import Image from "next/image";
@@ -8,22 +7,37 @@ import styles from "./styles/page.module.scss";
 import { Input, TextArea } from "./compnents/ui";
 import { Button } from "./compnents/ui/Button";
 import Link from "next/link";
-import { AuthContext } from "./compnents/contexts/AuthContext";
-import { FormEvent, useContext } from "react";
+import { api } from "@/service/api";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  const { signIn } = useContext(AuthContext);
+  
+ async function handlerLogin(formData: FormData) {
+  "use server"
+  const email = formData.get("email")
+  const password = formData.get("password")
 
-  async function HandlerLogin(event: FormEvent) {
-    event.preventDefault()
-
-    let data = {
-      email: "teste@teste.com",
-      password: "123123"
-    }
-
-    await signIn(data)
+  if(email == '' || password == '') {
+    console.log('preencha os campos')
+    return
   }
+
+  try{
+    const response = await api.post('session', {
+      email,
+      password
+    })
+    if(!response.data.token){
+      return
+    }
+    console.log(response.data)
+  }catch(err){
+    console.log(err)
+  }
+
+  redirect('/dashboard')
+ }
+
 
   return (
     <>
@@ -32,9 +46,9 @@ export default function Home() {
       <div className={styles.containerCenter}>
         <Image src={logoimg} alt="logo sujeito pizzaria" />
         <div className={styles.login}>
-          <form onSubmit={HandlerLogin}>
-            <Input placeholder="Digite seu Email" type="email" />
-            <Input placeholder="Digite sua senha" type="password" />
+          <form action={handlerLogin}>
+            <Input placeholder="Digite seu Email" type="email" name="email"/>
+            <Input placeholder="Digite sua senha" type="password" name="password"/>
 
             <Button type="submit" loading={false} >
               Acessar

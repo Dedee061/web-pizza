@@ -6,8 +6,37 @@ import styles from "./../styles/page.module.scss";
 import { Button } from "../compnents/ui/Button";
 import { Input } from "../compnents/ui";
 import Link from "next/link";
+import { api } from '@/service/api'
+import {redirect} from 'next/navigation'
 
 export default function SignUp() {
+  async function handlerRegister(formData: FormData) {
+    "use server";
+
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    if (name == "" || email == "" || password == "") {
+      console.log('Preencha todos os campos')
+      return;
+    }
+
+    try{
+      await api.post('/users', {
+        name,
+        email,
+        password,
+      })
+      console.log('Cadastrado com sucesso')
+    }catch(err){
+      console.log(err)
+      console.log('erro')
+    }
+
+    redirect('/')
+  }
+
   return (
     <>
       <title>Sujeito Pizza - Faça seu Registro</title>
@@ -16,21 +45,23 @@ export default function SignUp() {
         <Image src={logoimg} alt="logo sujeito pizzaria" />
 
         <div className={styles.login}>
-            <h1>Criando sua conta</h1>
-          <form>
-            <Input placeholder="Digite seu nome" type="name" />
-            <Input placeholder="Digite seu Email" type="email" />
-            <Input placeholder="Digite sua senha" type="password" />
+          <h1>Criando sua conta</h1>
+          <form action={handlerRegister}>
+            <Input placeholder="Digite seu nome" type="text" name="name" />
+            <Input placeholder="Digite seu Email" type="email" name="email" />
+            <Input
+              placeholder="Digite sua senha"
+              type="password"
+              name="password"
+            />
 
             <Button type="submit" loading={false}>
               Cadastra
             </Button>
           </form>
-          <Link className={styles.text} href='/'>
-          Já Possui uma conta? Faça seu login
-            
+          <Link className={styles.text} href="/">
+            Já Possui uma conta? Faça seu login
           </Link>
-
         </div>
       </div>
     </>
