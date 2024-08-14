@@ -2,12 +2,12 @@
 import Head from "next/head";
 import Image from "next/image";
 import type { Metadata } from "next";
-import logoimg from "../public/logo.svg";
+import logoimg from "@/public/logo.svg";
 import styles from "./styles/page.module.scss";
 import { Input, TextArea } from "./compnents/ui";
 import { Button } from "./compnents/ui/Button";
 import Link from "next/link";
-import { api } from "@/service/api";
+import { api } from "@/src/service/api";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 

@@ -1,12 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
 import type { Metadata } from "next";
-import logoimg from "../../public/logo.svg";
+import logoimg from "@/public/logo.svg";
 import styles from "./../styles/page.module.scss";
 import { Button } from "../compnents/ui/Button";
 import { Input } from "../compnents/ui";
 import Link from "next/link";
-import { api } from '@/service/api'
+import { api } from '@/src/service/api'
 import {redirect} from 'next/navigation'
 
 export default function SignUp() {
