@@ -1,9 +1,11 @@
-"use client"
 
-export default function dashboard () {
+import { Orders } from "./components/orders"
+
+export default function Dashboard () {
     return(
-        <div>
-            <h1>Pagina de DashBorad</h1>
-        </div>
+        <>
+        <title>Dashboard - pizza</title>
+        <Orders />
+        </>
     )
 }   
