@@ -1,7 +1,11 @@
+import styles from './styles.module.scss'
+
+import { Form } from '../components/form'
+
 export default function Product(){
     return(
-        <main>
-            <h1>Pagina de Produtos</h1>
-        </main>
+        
+            <Form />
+        
     )
 }
