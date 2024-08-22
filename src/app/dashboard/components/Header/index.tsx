@@ -31,8 +31,8 @@ export function Header() {
           />
         </Link>
         <nav>
-          <Link href="/dashborad/category">Categoria</Link>
-          <Link href="/dashborad/product">Produto</Link>
+          <Link href="/dashboard/category">Categoria</Link>
+          <Link href="/dashboard/products">Produto</Link>
           
           <form action={handlerLogout}>
             <button type="submit">

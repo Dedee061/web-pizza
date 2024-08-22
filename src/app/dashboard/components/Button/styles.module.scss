@@ -1,0 +1,23 @@
+.button{
+    height: 40px;
+    border-radius: 9px;
+    border:0;
+    background-color: var(--green-900);
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--black-900);
+}
+
+
+.anim {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform:  rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
