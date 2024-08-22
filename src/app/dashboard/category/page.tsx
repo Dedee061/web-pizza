@@ -34,7 +34,7 @@ export default function Category() {
   return (
     <>
 
-    <title>Registrar nova Categoria - pizza</title>
+    <title>Criando Categoria - pizza</title>
       <main className={styles.container}>
         <h1>Nova Categoria</h1>
 
