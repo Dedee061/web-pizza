@@ -1,10 +1,15 @@
-import { Header } from "./components/Header"
+import { OrderProvider } from "@/src/providers/order";
+import { Header } from "./components/Header";
 
-export default function DashboardLayout({children}: {children: React.ReactNode}){
-    return(
-        <>
-        <Header/>
-            {children}
-        </>
-    )
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <Header />
+      <OrderProvider>{children}</OrderProvider>
+    </>
+  );
 }
