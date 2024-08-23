@@ -5,8 +5,21 @@ import styles from "./styles.module.scss";
 import { ChangeEvent, useState } from "react";
 import Image from "next/image";
 import { Button } from "../Button";
+import { api } from "@/src/service/api";
+import { getCookieClient } from "@/src/lib/cookieClient";
+import { redirect } from "next/navigation";
+import { toast, Toaster } from "sonner";
 
-export function Form() {
+interface categoryProps{
+  id: string,
+  name:string
+
+}
+interface Props {
+  categories: categoryProps[]
+}
+
+export function Form({categories}: Props) {
 
     const [image, setImage] = useState<File>()
     const [previewImage, setPreviewImage] = useState("")
@@ -16,7 +29,8 @@ export function Form() {
             const image = e.target.files[0]
 
             if(image.type !=="image/png" && image.type !== "image/png") {
-                console.log("Formato de imagem inválido. Aceite apenas PNG ou JPEG.")
+                toast.warning("Formato de imagem inválido. Aceite apenas PNG ou JPEG.")
+                
                 return
             }
 
@@ -26,11 +40,47 @@ export function Form() {
         }
     }
 
+      
+    async function handleRegisterProduct(formData: FormData) {
+      const category = formData.get('Category')
+      const name = formData.get('name')
+      const price = formData.get('price')
+      const description = formData.get('description')
+
+      if(!name || !category || !price || !description || !image  ){
+        toast.warning('Preencha todos os campos')
+        return;
+      }
+
+      const data = new FormData()
+      data.append("name", name)
+      data.append("price", price)
+      data.append("description", description)
+      data.append("category_id", categories[Number(category)].id)
+      data.append("file", image)
+    
+      const token = getCookieClient()
+
+      await api.post("/product", data, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+
+      })
+      .catch((err) => {
+        console.error(err)
+        toast.warning('Falha a cadastrar')
+      })
+      toast.success('Produto Registrado com sucesso')
+      redirect('/dashboard')
+    
+    }
+
   return (
     <main className={styles.container}>
       <h1>Novo Produto</h1>
 
-      <form action="" className={styles.form}>
+      <form action={handleRegisterProduct} className={styles.form}>
         <label className={styles.labelImage}>
           <span>
             <UploadCloud size={30} color="#fff" />
@@ -45,12 +95,11 @@ export function Form() {
         </label>
 
         <select name="Category">
-            <option key={1} value={1}>
-                Pizza
-            </option>
-            <option key={1} value={1}>
-                Bebidas
-            </option>
+            {categories.map(
+              (category, index) => (
+                <option key={category.id} value={index}>{category.name}</option>
+              )
+            )}
         </select>
 
         <input type="text" name="name" placeholder="Digite o nome do produto" required className={styles.input} />

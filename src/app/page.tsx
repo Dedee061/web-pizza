@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import logoimg from "@/public/logo.svg";
 import styles from "./styles/page.module.scss";
 import { Input, TextArea } from "./compnents/ui";
-import { Button } from "./compnents/ui/Button";
+
 import Link from "next/link";
 import { api } from "@/src/service/api";
 import { redirect } from "next/navigation";
@@ -55,12 +55,12 @@ export default function Home() {
         <Image src={logoimg} alt="logo sujeito pizzaria" />
         <div className={styles.login}>
           <form action={handlerLogin}>
-            <Input placeholder="Digite seu Email" type="email" name="email"/>
+            <Input placeholder="Digite seu Email" required type="email" name="email"/>
             <Input placeholder="Digite sua senha" type="password" name="password"/>
 
-            <Button type="submit" loading={false} >
+            <button type="submit" >
               Acessar
-            </Button>
+            </button>
           </form>
           <Link className={styles.text} href="/signup">
             Não Possui uma conta ? Castadre-se

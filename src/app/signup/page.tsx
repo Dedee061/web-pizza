@@ -3,11 +3,12 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import logoimg from "@/public/logo.svg";
 import styles from "./../styles/page.module.scss";
-import { Button } from "../compnents/ui/Button";
+
 import { Input } from "../compnents/ui";
 import Link from "next/link";
 import { api } from '@/src/service/api'
 import {redirect} from 'next/navigation'
+import { toast } from "sonner";
 
 export default function SignUp() {
   async function handlerRegister(formData: FormData) {
@@ -26,9 +27,10 @@ export default function SignUp() {
       await api.post('/users', {
         name,
         email,
+        
         password,
       })
-      console.log('Cadastrado com sucesso')
+    toast.success('Login Realizado com sucesso')
     }catch(err){
       console.log(err)
       console.log('erro')
@@ -55,9 +57,9 @@ export default function SignUp() {
               name="password"
             />
 
-            <Button type="submit" loading={false}>
+            <button type="submit" >
               Cadastra
-            </Button>
+            </button>
           </form>
           <Link className={styles.text} href="/">
             Já Possui uma conta? Faça seu login
