@@ -2,12 +2,13 @@ import { X } from "lucide-react";
 import styles from "./styles.module.scss";
 import { use } from "react";
 import { OrderContext } from "@/src/providers/order";
+import { CalculateTotalOrder } from "@/src/lib/helper";
 
 export function Modalorder() {
-  const { onRequestClose, order,FinishOrder } = use(OrderContext);
+  const { onRequestClose, order, FinishOrder } = use(OrderContext);
 
   async function HandlerFinishOrder() {
-    await FinishOrder(order[0].order.id)
+    await FinishOrder(order[0].order.id);
   }
 
   function HandlerCloseDetail() {
@@ -28,20 +29,26 @@ export function Modalorder() {
           </span>
           {order[0].order.name && (
             <span className={styles.name}>
-             <b>{order[0].order.name}</b>
-          </span>
+              <b>{order[0].order.name}</b>
+            </span>
           )}
 
           {order.map((item) => (
             <section className={styles.containerItem} key={item.id}>
               <span>
-                {item.amount} <b>{item.product.name}</b>
+                Qtd: {item.amount} <b>{item.product.name}</b> - R${" "}
+                {parseFloat(item.product.price) * item.amount}
               </span>
-              <span className={styles.description}>{item.product.description}</span>
+              <span className={styles.description}>
+                {item.product.description}
+              </span>
             </section>
           ))}
+          <h3 className={styles.total}>Valor Total: R$ {CalculateTotalOrder(order)}</h3>
 
-          <button className={styles.buttonOrder} onClick={HandlerFinishOrder}>Concluir Pedido</button>
+          <button className={styles.buttonOrder} onClick={HandlerFinishOrder}>
+            Concluir Pedido
+          </button>
         </article>
       </section>
     </dialog>

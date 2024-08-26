@@ -18,7 +18,7 @@ type OrderProviderProps = {
   children: ReactNode;
 };
 
-interface orderItemProps {
+export interface orderItemProps {
   id: string;
   amount: number;
   created_at: string;
@@ -27,7 +27,7 @@ interface orderItemProps {
   product: {
     id: string;
     name: string;
-    price: number;
+    price: string;
     description: string;
     category_id: string;
     banner: string;
